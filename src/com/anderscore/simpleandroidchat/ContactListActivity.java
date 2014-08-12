@@ -7,10 +7,14 @@ import android.view.MenuItem;
 
 public class ContactListActivity extends Activity {
 
+	ConnectionAdapter connectionAdapter;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_contact_list);
+		connectionAdapter = new ConnectionAdapter();
+		connectionAdapter.connect();
 	}
 
 	@Override
