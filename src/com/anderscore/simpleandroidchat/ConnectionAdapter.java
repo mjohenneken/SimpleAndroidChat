@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.ConnectionListener;
 import org.jivesoftware.smack.SmackException;
+import org.jivesoftware.smack.SmackException.NotConnectedException;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode;
@@ -100,5 +101,15 @@ public class ConnectionAdapter {
 			}
 		});
 		
+	}
+
+	public void disconnect() {
+		try {
+			connectionXMPP.disconnect();
+			connectionXMPP = null;
+		} catch (NotConnectedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 }
