@@ -60,5 +60,10 @@ public class ContactListAdapter extends BaseAdapter {
 
 		return rowView;
 	}
+	
+	public void updateList(ArrayList<Contact> contacts) {
+		this.contacts = contacts;
+		notifyDataSetChanged();
+	}
 
 }
