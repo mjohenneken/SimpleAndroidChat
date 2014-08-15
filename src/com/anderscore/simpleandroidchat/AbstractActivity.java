@@ -10,7 +10,7 @@ import android.os.IBinder;
 
 import com.anderscore.simpleandroidchat.MessengerService.LocalBinder;
 
-public class AbstractActivity extends Activity {
+public abstract class AbstractActivity extends Activity {
 
 	MessengerService messengerService;
 	ServiceConnection serviceConnection = new ServiceConnection() {
@@ -20,6 +20,7 @@ public class AbstractActivity extends Activity {
 			LocalBinder binder = (LocalBinder) service;
 			messengerService = binder.getService();
 			messengerService.connect();
+			onServiceAvailable();
 
 		}
 
@@ -29,6 +30,8 @@ public class AbstractActivity extends Activity {
 		}
 
 	};
+	
+	abstract void onServiceAvailable();
 
 	protected MessengerService getService() {
 		return messengerService;

@@ -25,6 +25,7 @@ public class MessengerService extends Service {
 	public void onCreate() {		
 		super.onCreate();
 		connectionAdapter = new ConnectionAdapter();	
+		connect();
 	}
 	
 	@Override
