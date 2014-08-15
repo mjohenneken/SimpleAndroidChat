@@ -12,4 +12,8 @@ public final class Constants {
 		public static final int MSG 	= 2;
 	}
 	
+	public static final class Extra {
+		public static final String USER = "user";
+	}
+	
 }

@@ -95,4 +95,14 @@ public class MessengerService extends Service implements ConnectionAdapterCallba
 		}		
 	}
 
+	public void sendMessage(String msg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public ChatMsg getMessages(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

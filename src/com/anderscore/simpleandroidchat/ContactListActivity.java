@@ -1,5 +1,8 @@
 package com.anderscore.simpleandroidchat;
 
+import com.anderscore.simpleandroidchat.Constants.Extra;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,7 +15,7 @@ public class ContactListActivity extends AbstractActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setContentView(R.layout.activity_list);	
+		setContentView(R.layout.activity_contact_list);	
 		listAdpater = new ContactListAdapter(this);
 		
 		listView = (ListView) findViewById(android.R.id.list);
@@ -22,8 +25,9 @@ public class ContactListActivity extends AbstractActivity {
 		
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				//chat
-				
+				Intent intent = new Intent(getBaseContext(), ChatActivity.class);
+				intent.putExtra(Extra.USER, listAdpater.getItem(position).getName());
+				startActivity(intent);
 			}
 		});
 		super.onCreate(savedInstanceState);

@@ -6,5 +6,8 @@
     <string name="action_settings">Settings</string>
     
     <string name="iViewIsOnlineContentDescription">IsOnline</string>
+    <string name="eTextChatMessageHint">type here</string>
+    <string name="tViewEmptyChatList">No Messages!</string>
+    <string name="tViewEmptyContactList">No Contacts!</string>
 
 </resources>

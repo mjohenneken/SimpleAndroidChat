@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
+    <color name="white">#FFF</color>
+    
     <color name="grey1">#BBB</color>
     <color name="grey2">#AAA</color>
     <color name="grey3">#999</color>
