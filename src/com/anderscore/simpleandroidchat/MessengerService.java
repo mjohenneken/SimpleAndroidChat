@@ -50,8 +50,7 @@ public class MessengerService extends Service {
 	}
 
 	public ArrayList<Contact> getContacts() {
-		// TODO Auto-generated method stub
-		return null;
+		return connectionAdapter.getContacts();
 	}
 
 
