@@ -1,6 +1,7 @@
 package com.anderscore.simpleandroidchat;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.ConnectionListener;
@@ -111,5 +112,10 @@ public class ConnectionAdapter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
+	}
+
+	public ArrayList<Contact> getContacts() {
+		
+		return null;
 	}
 }
