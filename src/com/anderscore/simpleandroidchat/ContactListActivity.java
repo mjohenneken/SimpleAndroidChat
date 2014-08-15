@@ -12,7 +12,7 @@ public class ContactListActivity extends AbstractActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setContentView(R.layout.activity_contact_list);	
+		setContentView(R.layout.activity_list);	
 		listAdpater = new ContactListAdapter(this);
 		
 		listView = (ListView) findViewById(android.R.id.list);
