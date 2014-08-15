@@ -13,13 +13,14 @@ import com.anderscore.simpleandroidchat.MessengerService.LocalBinder;
 public abstract class AbstractActivity extends Activity {
 
 	MessengerService messengerService;
+	boolean bound;
 	ServiceConnection serviceConnection = new ServiceConnection() {
 
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
 			LocalBinder binder = (LocalBinder) service;
 			messengerService = binder.getService();
-			
+
 			onServiceAvailable();
 
 		}
@@ -30,7 +31,7 @@ public abstract class AbstractActivity extends Activity {
 		}
 
 	};
-	
+
 	abstract void onServiceAvailable();
 
 	protected MessengerService getService() {
@@ -50,13 +51,18 @@ public abstract class AbstractActivity extends Activity {
 	}
 
 	private void bind() {
-		Intent serviceIntent = new Intent(this, MessengerService.class);
-		startService(serviceIntent);
-		bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
-
+		if (!bound) {
+			bound = true;
+			Intent serviceIntent = new Intent(this, MessengerService.class);
+			startService(serviceIntent);
+			bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
+		}
 	}
 
 	private void unbind() {
-		unbindService(serviceConnection);
+		if (bound) {
+			unbindService(serviceConnection);
+		}
 	}
+
 }
