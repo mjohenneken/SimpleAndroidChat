@@ -2,9 +2,12 @@ package com.anderscore.simpleandroidchat;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.ConnectionListener;
+import org.jivesoftware.smack.Roster;
+import org.jivesoftware.smack.RosterEntry;
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.SmackException.NotConnectedException;
 import org.jivesoftware.smack.XMPPConnection;
@@ -115,7 +118,12 @@ public class ConnectionAdapter {
 	}
 
 	public ArrayList<Contact> getContacts() {
-		
-		return null;
+		Roster roster = connectionXMPP.getRoster();
+		Collection<RosterEntry> entries = roster.getEntries();
+		ArrayList<Contact> contacts = new ArrayList<Contact>();
+		for (RosterEntry entry : entries) {
+			contacts.add(new Contact(entry.getUser(), roster.getPresence(entry.getUser()).isAvailable()));
+		}
+		return contacts;
 	}
 }
