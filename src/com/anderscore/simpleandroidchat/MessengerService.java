@@ -32,7 +32,7 @@ public class MessengerService extends Service {
 	
 	@Override
 	public void onDestroy() {
-		connectionAdapter.disconnect();
+		disconnect();
 		super.onDestroy();
 	}
 	

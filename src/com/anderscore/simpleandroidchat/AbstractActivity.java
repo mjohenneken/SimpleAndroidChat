@@ -19,7 +19,7 @@ public abstract class AbstractActivity extends Activity {
 		public void onServiceConnected(ComponentName name, IBinder service) {
 			LocalBinder binder = (LocalBinder) service;
 			messengerService = binder.getService();
-			messengerService.connect();
+			
 			onServiceAvailable();
 
 		}

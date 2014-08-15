@@ -118,9 +118,9 @@ public class ConnectionAdapter {
 	}
 
 	public ArrayList<Contact> getContacts() {
-		Roster roster = connectionXMPP.getRoster();
-		Collection<RosterEntry> entries = roster.getEntries();
 		ArrayList<Contact> contacts = new ArrayList<Contact>();
+		Roster roster = connectionXMPP.getRoster();		
+		Collection<RosterEntry> entries = roster.getEntries();
 		for (RosterEntry entry : entries) {
 			contacts.add(new Contact(entry.getUser(), roster.getPresence(entry.getUser()).isAvailable()));
 		}

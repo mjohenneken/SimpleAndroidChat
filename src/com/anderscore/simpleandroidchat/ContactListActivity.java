@@ -12,8 +12,9 @@ public class ContactListActivity extends AbstractActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_contact_list);	
+		listAdpater = new ContactListAdapter(this);
+		
 		listView = (ListView) findViewById(android.R.id.list);
 		listView.setAdapter(listAdpater);
 		listView.setEmptyView(findViewById(android.R.id.empty));
@@ -25,6 +26,7 @@ public class ContactListActivity extends AbstractActivity {
 				
 			}
 		});
+		super.onCreate(savedInstanceState);
 	}
 
 	@Override

@@ -3,4 +3,6 @@
     android:id="@+id/tViewUser"
     android:layout_width="match_parent"
     android:layout_height="@dimen/listItemHeightDefault" 
-    android:textSize="@dimen/textSizeLarge"/>
+    android:textSize="@dimen/textSizeLarge"
+    android:gravity="center_vertical"
+    android:paddingRight="16dp"/>

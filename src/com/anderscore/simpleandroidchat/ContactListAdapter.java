@@ -2,7 +2,6 @@ package com.anderscore.simpleandroidchat;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -18,6 +17,10 @@ public class ContactListAdapter extends BaseAdapter {
 	
 	static class ViewHolder {
 		TextView tViewUser;
+	}
+	
+	public ContactListAdapter(Context context) {
+		this.context = context;
 	}
 
 	@Override
@@ -52,10 +55,10 @@ public class ContactListAdapter extends BaseAdapter {
 		holder.tViewUser.setText(contacts.get(position).getName());
 		
 		if (contacts.get(position).isOnline()) {
-			holder.tViewUser.setCompoundDrawables(null, null, context.getResources().getDrawable(R.drawable.circle_green), null);
+			holder.tViewUser.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.circle_green, 0);
 		}
 		else {
-			holder.tViewUser.setCompoundDrawables(null, null, context.getResources().getDrawable(R.drawable.circle_gray), null);			
+			holder.tViewUser.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.circle_gray, 0);		
 		}
 
 		return rowView;
