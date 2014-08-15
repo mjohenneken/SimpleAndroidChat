@@ -1,8 +1,8 @@
 package com.anderscore.simpleandroidchat;
 
 public class Contact {
-	String name;
-	boolean isOnline;
+	private String name;
+	private boolean isOnline;
 	
 	public Contact(String name, boolean isOnline) {
 		setName(name);
