@@ -6,20 +6,31 @@ import java.util.Collection;
 
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.ConnectionListener;
+import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.Roster;
 import org.jivesoftware.smack.RosterEntry;
+import org.jivesoftware.smack.RosterListener;
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.SmackException.NotConnectedException;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode;
+import org.jivesoftware.smack.filter.PacketFilter;
+import org.jivesoftware.smack.filter.PacketTypeFilter;
+import org.jivesoftware.smack.packet.Packet;
+import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 
+import android.os.Message;
 import android.util.Log;
 
 public class ConnectionAdapter {
 	
 	XMPPTCPConnection connectionXMPP;
+	ConnectionAdapterCallback callback;
+	public ConnectionAdapter(ConnectionAdapterCallback callback) {
+		this.callback = callback;
+	}
 
 	void connect() {
 		
@@ -28,6 +39,7 @@ public class ConnectionAdapter {
 		connectionXMPP = new XMPPTCPConnection(config);
 		
 		addConnectionListener();
+		addMessageListener();
 		
 		new Thread(new Runnable(){
 
@@ -104,7 +116,19 @@ public class ConnectionAdapter {
 				
 			}
 		});
-		
+	}
+	
+	private void addMessageListener() {
+		connectionXMPP.addPacketListener(new PacketListener() {
+			
+			@Override
+			public void processPacket(Packet packet) throws NotConnectedException {
+				org.jivesoftware.smack.packet.Message message =  (org.jivesoftware.smack.packet.Message) packet;
+				Contact contact = new Contact(message.getFrom(), connectionXMPP.getRoster().getPresence(packet.getFrom()).isAvailable());
+				ChatMsg msg = new ChatMsg(contact, true, message.getBody());
+				callback.notifyMsg(msg);				
+			}
+		}, new PacketTypeFilter(org.jivesoftware.smack.packet.Message.class));		
 	}
 
 	public void disconnect() {

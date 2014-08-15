@@ -35,4 +35,16 @@ public class ContactListActivity extends AbstractActivity {
 		
 	}
 
+	@Override
+	void notifyContact(Contact contact) {
+		listAdpater.updateList(getService().getContacts());
+		
+	}
+
+	@Override
+	void notifyMsg(ChatMsg msg) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

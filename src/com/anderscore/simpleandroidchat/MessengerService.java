@@ -1,16 +1,24 @@
 package com.anderscore.simpleandroidchat;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+
+import com.anderscore.simpleandroidchat.Constants.Event;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
 
-public class MessengerService extends Service {
+public class MessengerService extends Service implements ConnectionAdapterCallback {
 	
 	IBinder mBinder = new LocalBinder();
 	ConnectionAdapter connectionAdapter;
+	LinkedList<Messenger> observers = new LinkedList<Messenger>();
 	
 	public class LocalBinder extends Binder {
 		public MessengerService getService(){
@@ -26,7 +34,7 @@ public class MessengerService extends Service {
 	@Override
 	public void onCreate() {		
 		super.onCreate();
-		connectionAdapter = new ConnectionAdapter();	
+		connectionAdapter = new ConnectionAdapter(this);	
 		connect();
 	}
 	
@@ -53,5 +61,38 @@ public class MessengerService extends Service {
 		return connectionAdapter.getContacts();
 	}
 
+	public void registerMessenger(Messenger messenger) {
+		observers.add(messenger);		
+	}
+
+	public void unregisterMessenger(Messenger messenger) {
+		observers.remove(messenger);		
+	}
+
+	@Override
+	public void notifyContact(Contact contact) {
+		Iterator<Messenger> iter = observers.iterator();
+		while(iter.hasNext()) {
+			try {
+				iter.next().send(Message.obtain(null, Event.CONTACT, contact));
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	@Override
+	public void notifyMsg(ChatMsg chatMsg) {
+		Iterator<Messenger> iter = observers.iterator();
+		while(iter.hasNext()) {
+			try {
+				iter.next().send(Message.obtain(null, Event.CONTACT, chatMsg));
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}		
+	}
 
 }
