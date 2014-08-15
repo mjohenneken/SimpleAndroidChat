@@ -29,7 +29,7 @@ public class ContactListActivity extends AbstractActivity {
 
 	@Override
 	void onServiceAvailable() {
-		
+		listAdpater.updateList(getService().getContacts());
 		
 	}
 

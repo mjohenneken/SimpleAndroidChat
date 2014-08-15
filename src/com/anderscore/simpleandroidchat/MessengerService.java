@@ -1,5 +1,7 @@
 package com.anderscore.simpleandroidchat;
 
+import java.util.ArrayList;
+
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
@@ -46,5 +48,11 @@ public class MessengerService extends Service {
 	public void disconnect() {
 		connectionAdapter.disconnect();
 	}
+
+	public ArrayList<Contact> getContacts() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }
