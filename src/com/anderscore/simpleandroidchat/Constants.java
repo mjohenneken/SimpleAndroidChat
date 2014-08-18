@@ -14,6 +14,7 @@ public final class Constants {
 	
 	public static final class Extra {
 		public static final String USER = "user";
+		protected static final String IS_ONLINE = "is_online";
 	}
 	
 }

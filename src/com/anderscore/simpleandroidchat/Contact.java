@@ -9,7 +9,7 @@ public class Contact {
 		setOnline(isOnline);
 	}
 	
-	public String getName() {
+	public String getUser() {
 		return name;
 	}
 	private void setName(String name) {

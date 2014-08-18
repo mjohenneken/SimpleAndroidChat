@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import com.anderscore.simpleandroidchat.Constants.Event;
-
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
@@ -13,6 +11,8 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+
+import com.anderscore.simpleandroidchat.Constants.Event;
 
 public class MessengerService extends Service implements ConnectionAdapterCallback {
 	
@@ -74,7 +74,7 @@ public class MessengerService extends Service implements ConnectionAdapterCallba
 		Iterator<Messenger> iter = observers.iterator();
 		while(iter.hasNext()) {
 			try {
-				iter.next().send(Message.obtain(null, Event.CONTACT, contact));
+				iter.next().send(Message.obtain(null, Event.CONTACT, contact));				
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -87,7 +87,7 @@ public class MessengerService extends Service implements ConnectionAdapterCallba
 		Iterator<Messenger> iter = observers.iterator();
 		while(iter.hasNext()) {
 			try {
-				iter.next().send(Message.obtain(null, Event.CONTACT, chatMsg));
+				iter.next().send(Message.obtain(null, Event.MSG, chatMsg));
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -95,14 +95,8 @@ public class MessengerService extends Service implements ConnectionAdapterCallba
 		}		
 	}
 
-	public void sendMessage(String msg) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public ChatMsg getMessages(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public ChatMsg sendMessage(ChatMsg msg) {
+		return connectionAdapter.sendMessage(msg);		
+	}	
 
 }

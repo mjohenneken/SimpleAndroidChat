@@ -52,7 +52,7 @@ public class ContactListAdapter extends BaseAdapter {
 		ViewHolder holder = (ViewHolder) rowView.getTag();
 		
 		//Data
-		holder.tViewUser.setText(contacts.get(position).getName());
+		holder.tViewUser.setText(contacts.get(position).getUser());
 		
 		if (contacts.get(position).isOnline()) {
 			holder.tViewUser.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.circle_green, 0);

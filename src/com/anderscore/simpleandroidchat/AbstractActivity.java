@@ -37,22 +37,24 @@ public abstract class AbstractActivity extends Activity{
 
 	};
 	
-	Messenger messenger = new Messenger(new Handler(){
+	private Messenger messenger = new Messenger(new Handler(new Handler.Callback() {
+		
 		@Override
-		public void handleMessage(Message msg) {
+		public boolean handleMessage(Message msg) {
 			switch (msg.what) {
 			case Event.CONTACT:
 				notifyContact((Contact) msg.obj);				
-				break;
+				return true;
 			case Event.MSG:
 				notifyMsg((ChatMsg) msg.obj);
-				break;
+				return true;
 			default:
-				super.handleMessage(msg);
-				break;
-			}
+				return false;				
+			}			
 		}
-	});
+	}));
+	
+	
 
 	abstract void onServiceAvailable();
 	abstract void notifyContact(Contact contact);
@@ -86,6 +88,7 @@ public abstract class AbstractActivity extends Activity{
 
 	private void unbind() {
 		if (bound) {
+			bound = false;
 			unbindService(serviceConnection);
 		}
 	}
