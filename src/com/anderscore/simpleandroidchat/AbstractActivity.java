@@ -1,7 +1,11 @@
 package com.anderscore.simpleandroidchat;
 
+import com.anderscore.simpleandroidchat.MessengerService.LocalBinder;
+
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -12,7 +16,8 @@ import android.os.IBinder;
  */
 public class AbstractActivity extends Activity {
 
-	// TODO
+	boolean bound	= false;
+	MessengerService mService	= null;
 
 	ServiceConnection serviceConnection = new ServiceConnection() {
 
@@ -21,7 +26,8 @@ public class AbstractActivity extends Activity {
 		 */
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
-			// TODO
+			LocalBinder mBinder	= (LocalBinder) service;
+			mService		= mBinder.getService();
 		}
 
 		/**
@@ -29,7 +35,7 @@ public class AbstractActivity extends Activity {
 		 */
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
-			// TODO
+			mService	= null;
 		}
 
 	};
@@ -40,7 +46,7 @@ public class AbstractActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// TODO
+		bind();
 	}
 
 	/**
@@ -49,7 +55,7 @@ public class AbstractActivity extends Activity {
 	@Override
 	protected void onStop() {
 		super.onStop();
-		// TODO
+		unbind();
 	}
 
 	/**
@@ -57,14 +63,20 @@ public class AbstractActivity extends Activity {
 	 * bind auto create
 	 */
 	private void bind() {
-		// TODO
+		if(bound) return;
+		bound	= true;
+		Intent intent = new Intent(this, MessengerService.class);
+		startService(intent);
+		bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
 	}
 
 	/**
 	 * bound checken und setzen, unbindService
 	 */
 	private void unbind() {
-		// TODO
+		if(!bound) return;
+		bound = false;
+		unbindService(serviceConnection);
 	}
 
 }

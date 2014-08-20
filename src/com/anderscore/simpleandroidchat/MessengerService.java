@@ -2,39 +2,52 @@ package com.anderscore.simpleandroidchat;
 
 import java.util.ArrayList;
 
+import android.app.Service;
+import android.content.Intent;
+import android.os.Binder;
+import android.os.IBinder;
 import android.os.Messenger;
 
-public class MessengerService implements ConnectionAdapterEventbus {
+public class MessengerService extends Service implements ConnectionAdapterEventbus {
 	
 	ConnectionAdapter 	connection;
 	DBModel				model;
+	LocalBinder			mBinder	= new LocalBinder();
 	
+	public class LocalBinder extends Binder{
+		public MessengerService getService(){
+			return MessengerService.this;
+		}
+	}
 	
-/* ------- Service ------- 
+/* ------- Service ------- */
 	
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		return 0;
+		return START_STICKY;
 	}
 	
 	
 	@Override
 	public void onCreate() {		
 		super.onCreate();
+		connection	= new ConnectionAdapter(this);
+		model		= new DBModel(this);
 	}
 
 	
 	@Override
 	public IBinder onBind(Intent intent) {
-		return null;
+		return mBinder;
 	}
 	
 	
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-	}*/
+		connection.disconnect();
+	}
 
 	
 /* ------- Service API ------- */
@@ -63,7 +76,7 @@ public class MessengerService implements ConnectionAdapterEventbus {
 	 * 	@return
 	 */
 	public ArrayList<Contact> getContacts() {
-		return null;
+		return model.getContacts();
 	}
 	
 	
@@ -73,7 +86,7 @@ public class MessengerService implements ConnectionAdapterEventbus {
 	 * 	@return
 	 */
 	public Contact getContact(int contactId){
-		return null;
+		return model.getContact(contactId);
 	}
 	
 	
@@ -83,7 +96,9 @@ public class MessengerService implements ConnectionAdapterEventbus {
 	 * 	@return
 	 */
 	public ChatMsg sendMsg(ChatMsg msg) {
-		return null;
+		msg	= model.appendChatMsg(msg);
+		connection.sendMsg(msg);
+		return msg;
 	}
 
 	
