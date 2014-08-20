@@ -1,19 +1,39 @@
 package com.anderscore.simpleandroidchat;
 
 public class ChatMsg {
-	private Contact contact;
+	private int id;
+	private String user;
+	private int userId;
 	private boolean incomming;
 	private String msg;
 	
-	public ChatMsg(Contact contact, boolean incomming, String msg) {
-		setContact(contact);
+	
+	public ChatMsg(int id, String user, int userId, boolean incomming, String msg) {
+		setId(id);
+		setUser(user);
+		setIncomming(incomming);
+		setMsg(msg);
+		setUserId(userId);
+	}
+	
+	
+	public ChatMsg(String user, int userId, boolean incomming, String msg) {
+		setUser(user);
+		setIncomming(incomming);
+		setMsg(msg);
+		setUserId(userId);
+	}
+	
+	
+	public ChatMsg(String user, boolean incomming, String msg) {
+		setUser(user);
 		setIncomming(incomming);
 		setMsg(msg);
 	}
 	
 	
-	private void setContact(Contact contact) {
-		this.contact = contact;
+	private void setUser(String user) {
+		this.user = user;
 	}
 	
 	private void setIncomming(boolean incomming) {
@@ -24,8 +44,8 @@ public class ChatMsg {
 		this.msg = msg;
 	}
 	
-	public Contact getContact() {
-		return contact;
+	public String getUser() {
+		return user;
 	}
 	
 	public boolean isIncomming() {
@@ -34,5 +54,21 @@ public class ChatMsg {
 	
 	public String getMsg() {
 		return msg;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}	
 }

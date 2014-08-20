@@ -1,7 +1,5 @@
 package com.anderscore.simpleandroidchat;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.jivesoftware.smack.ConnectionConfiguration;
@@ -10,157 +8,202 @@ import org.jivesoftware.smack.ConnectionListener;
 import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.Roster;
 import org.jivesoftware.smack.RosterEntry;
-import org.jivesoftware.smack.SmackException;
+import org.jivesoftware.smack.RosterListener;
 import org.jivesoftware.smack.SmackException.NotConnectedException;
 import org.jivesoftware.smack.XMPPConnection;
-import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.filter.PacketTypeFilter;
 import org.jivesoftware.smack.packet.Packet;
+import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
-
-import android.util.Log;
 
 public class ConnectionAdapter {
 
-	XMPPTCPConnection connectionXMPP;
-	ConnectionAdapterCallback callback;
+	// XMPP Stuff
+	private XMPPTCPConnection connection;	
+	private ConnectionConfiguration config;
+	private Roster roster;
+	
+	private ConnectionAdapterEventbus eventbus;
 
-	public ConnectionAdapter(ConnectionAdapterCallback callback) {
-		this.callback = callback;
+	
+	/**	ConnectionAdaper
+	 * 
+	 * 	@param eventbus
+	 */
+	ConnectionAdapter(ConnectionAdapterEventbus eventbus) {
+		this.eventbus	= eventbus;	
+		
+		config = new ConnectionConfiguration(Constants.HOST, Constants.PORT);
+		
+		connect();
 	}
 
+
+/* ------- ConnectionAdapter ------- */
+	
+	
+	/**	connect
+	 * 
+	 */
 	void connect() {
-
-		ConnectionConfiguration config = new ConnectionConfiguration(Constants.HOST, Constants.PORT);
+		if(connection!=null)	return;
+		
 		config.setSecurityMode(SecurityMode.disabled);
-		connectionXMPP = new XMPPTCPConnection(config);
-
+		config.setReconnectionAllowed(false);
+		connection	= new XMPPTCPConnection(config);
+		
 		addConnectionListener();
 		addMessageListener();
 
 		new Thread(new Runnable() {
-
+						
 			@Override
 			public void run() {
-				try {
-					connectionXMPP.connect();
-				} catch (SmackException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (XMPPException e) {
-					// TODO Auto-generated catch block
+				try {	
+					connection.connect();
+				} catch(Exception e){
 					e.printStackTrace();
 				}
 			}
 		}).start();
 	}
+	
 
-	private void addConnectionListener() {
-		connectionXMPP.addConnectionListener(new ConnectionListener() {
+	/**	disconnect
+	 * 
+	 */
+	void disconnect() {
+		if(connection==null) return;
+		try{
+			connection.disconnect();
+		}catch (NotConnectedException e) {
+			e.printStackTrace();
+		}
+		connection 	= null;
+		roster		= null;
+	}
+
+	
+	/**	sendMsg
+	 * 
+	 * 	@param chatMsg
+	 */
+	void sendMsg(ChatMsg chatMsg) {
+		if(connection==null)	return;		
+		try {
+			org.jivesoftware.smack.packet.Message message = new org.jivesoftware.smack.packet.Message();
+			message.setBody(chatMsg.getMsg());
+			message.setTo(chatMsg.getUser());
+			connection.sendPacket(message);
+		}catch 	(NotConnectedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+/* ------- protected Methods ------ */
+
+	
+	/**	fetchRosterEntries
+	 * 
+	 */
+	private void fetchRosterEntries() {
+		Collection<RosterEntry> rosterEntries = roster.getEntries();
+		for (RosterEntry entry : rosterEntries) {
+			Presence presence = roster.getPresence(entry.getUser());
+			Contact contact;
+			contact = new Contact(entry.getUser(), presence.isAvailable());
+			eventbus.contactEvent(contact);
+		}
+	}
+	
+	
+/* ------- Listener ------- */
+	
+	
+	/**	Add Connection Listener
+	 * 
+	 */
+	private void addConnectionListener(){		
+		connection.addConnectionListener(new ConnectionListener() {
+			@Override public void reconnectionSuccessful() {}			
+			@Override public void reconnectionFailed(Exception arg0) {}			
+			@Override public void reconnectingIn(int arg0) {}
 
 			@Override
-			public void connected(XMPPConnection connection) {
-				Log.i("connected", "connected: true");
-				try {
-					connectionXMPP.login(Constants.USER, Constants.PASSWORD);
-				} catch (XMPPException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (SmackException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-
-			@Override
-			public void authenticated(XMPPConnection connection) {
-				Log.i("authenticated", "authenticated: true");
+			public void connectionClosedOnError(Exception arg0) {
+				System.out.println("connectionClosedOnError");			
 			}
 
 			@Override
 			public void connectionClosed() {
-				// TODO Auto-generated method stub
-
+				System.out.println("connectionClosed");
 			}
 
 			@Override
-			public void connectionClosedOnError(Exception e) {
-				// TODO Auto-generated method stub
-
+			public void connected(XMPPConnection arg0) {
+				try {			
+					connection.login(Constants.USER, Constants.PASSWORD);
+				} catch (Exception e) {
+					e.printStackTrace();
+					disconnect();
+				}
 			}
 
 			@Override
-			public void reconnectingIn(int seconds) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void reconnectionSuccessful() {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void reconnectionFailed(Exception e) {
-				// TODO Auto-generated method stub
-
+			public void authenticated(XMPPConnection arg0) {				
+				roster	= connection.getRoster();
+				addRosterListener();
+				fetchRosterEntries();
 			}
 		});
 	}
-
-	private void addMessageListener() {
-		connectionXMPP.addPacketListener(new PacketListener() {
-
+	
+	
+	/**	Add Roster Listener
+	 * 
+	 */
+	private void addRosterListener(){
+		roster.addRosterListener(new RosterListener() {
+			
 			@Override
-			public void processPacket(Packet packet) throws NotConnectedException {
-				org.jivesoftware.smack.packet.Message message = (org.jivesoftware.smack.packet.Message) packet;
-				Contact contact = new Contact(message.getFrom().split("/")[0], connectionXMPP.getRoster().getPresence(packet.getFrom()).isAvailable());
-				ChatMsg msg = new ChatMsg(contact, true, message.getBody());
-				callback.notifyMsg(msg);
+			public void presenceChanged(Presence presence) {
+				if(presence==null)	return;
+				String user	= presence.getFrom().split("/")[0];
+				RosterEntry entry = roster.getEntry(user);				
+				eventbus.contactEvent(new Contact(entry.getUser(), presence.isAvailable()));
+			}
+			
+			@Override
+			public void entriesUpdated(Collection<String> arg0) {
+				for(String entry:arg0)	presenceChanged(roster.getPresence(entry));
+			}
+			
+			@Override
+			public void entriesDeleted(Collection<String> arg0) {
+				System.out.println("entriesDeleted");
+			}
+			
+			@Override
+			public void entriesAdded(Collection<String> arg0) {
+				System.out.println("entriesAdded");
+			}
+		});
+	}
+	
+	
+	/**	Add Message Listener
+	 * 
+	 */
+	private void addMessageListener(){
+		connection.addPacketListener(new PacketListener() {
+			
+			@Override
+			public void processPacket(Packet arg0) throws NotConnectedException {
+				org.jivesoftware.smack.packet.Message message = (org.jivesoftware.smack.packet.Message) arg0;
+				if(message.getBody()!=null && !message.getBody().equals(""))
+					eventbus.incommingMsgEvent(new ChatMsg(message.getFrom().split("/")[0], true, message.getBody()));
 			}
 		}, new PacketTypeFilter(org.jivesoftware.smack.packet.Message.class));
-	}
-
-	public void disconnect() {
-		try {
-			connectionXMPP.disconnect();
-			connectionXMPP = null;
-		} catch (NotConnectedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public ArrayList<Contact> getContacts() {
-		ArrayList<Contact> contacts = new ArrayList<Contact>();
-		Roster roster = connectionXMPP.getRoster();
-		Collection<RosterEntry> entries = roster.getEntries();
-		for (RosterEntry entry : entries) {
-			contacts.add(new Contact(entry.getUser(), roster.getPresence(entry.getUser()).isAvailable()));
-		}
-		return contacts;
-	}
-
-	public ChatMsg sendMessage(ChatMsg msg) {
-		ChatMsg showMsg = null;
-		try {
-			org.jivesoftware.smack.packet.Message message = new org.jivesoftware.smack.packet.Message();
-			message.setBody(msg.getMsg());
-			message.setTo(msg.getContact().getUser());
-
-			connectionXMPP.sendPacket(message);
-			showMsg = new ChatMsg(new Contact(connectionXMPP.getUser().split("/")[0], true), false, msg.getMsg());			
-		} catch (NotConnectedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return showMsg;
 	}
 }
