@@ -1,5 +1,7 @@
 package com.anderscore.simpleandroidchat;
 
+import java.util.ArrayList;
+
 
 /**
  * 
@@ -9,9 +11,24 @@ package com.anderscore.simpleandroidchat;
  *
  */
 public class ContactListAdapter {
+	//extends BaseAdapter {
+	
+	/**
+	 * context
+	 */
+	public ContactListAdapter() {
+		
+	}
 
 	
-	
+	/**
+	 * 
+	 * @param values - neue Daten
+	 * 	erneuert den Datenbestand und lässt den ListView neu laden
+	 */
+	public void updateList(ArrayList<Contact> values) {
+		//TODO update values
+	}
 	
 
 }
