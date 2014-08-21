@@ -36,4 +36,6 @@ public final class Constants {
 			public static final String TEXT_MSG		= "text_msg";
 		}
 	}
+	
+	public static final int NOTIFICATION_INDEX		= 4711;
 }
