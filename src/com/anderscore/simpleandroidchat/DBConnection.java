@@ -30,8 +30,8 @@ class DBConnection extends SQLiteOpenHelper{
 				Constants.DB.Contacts.TABLE_NAME + " (" +
 				Constants.DB.Contacts.ID +" INTEGER PRIMARY KEY, " +
 				Constants.DB.Contacts.USER + " TEXT, " +
-				Constants.DB.Contacts.ONLINE + " INTEGER, " +
-				" )";
+				Constants.DB.Contacts.ONLINE + " INTEGER " +
+				")";
 		db.execSQL(sql);
 		
 		sql = "CREATE TABLE " +
@@ -40,7 +40,7 @@ class DBConnection extends SQLiteOpenHelper{
 				Constants.DB.Messages.USER_ID + " INTEGER, " +
 				Constants.DB.Messages.INCOMMING + " INTEGER, " +
 				Constants.DB.Messages.TEXT_MSG + " TEXT " +
-				" )";
+				")";
 		db.execSQL(sql);
 	}
 
