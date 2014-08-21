@@ -53,7 +53,12 @@ public class ChatListAdapter extends BaseAdapter {
 		ViewHolder holder = (ViewHolder) rowView.getTag();
 		ChatMsg msg = getItem(position);
 		holder.tViewMessage.setText(msg.getMsg());
-		holder.tViewUser.setText(msg.getUser());
+		if (messages.get(position).isIncomming()) {
+			holder.tViewUser.setText(msg.getUser());			
+		}
+		else {
+			holder.tViewUser.setText("Ich");
+		}
 		return rowView;
 	}
 	
