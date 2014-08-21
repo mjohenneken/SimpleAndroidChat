@@ -88,7 +88,7 @@ public class ChatActivity extends AbstractActivity {
 //	 * get messages
 //	 */
 //	@Override
-//	void onServiceAvailable() {
+//	protected void onServiceAvailable() {
 //		int userID = getIntent().getIntExtra(Extra.USER_ID, 0);
 //		//TODO contact = mBinder.getContact();
 //
