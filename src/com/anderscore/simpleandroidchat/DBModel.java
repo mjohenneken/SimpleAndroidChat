@@ -82,7 +82,7 @@ class DBModel{
 			do{
 				int id				= cursor.getInt(cursor.getColumnIndex(Constants.DB.Messages.ID));
 				boolean direction	= false;
-				if(cursor.getInt(cursor.getColumnIndex(Constants.DB.Messages.INCOMMING))==1)	direction = true;;
+				if(cursor.getInt(cursor.getColumnIndex(Constants.DB.Messages.INCOMMING))==1)	direction = true;
 				String	msg			= cursor.getString(cursor.getColumnIndex(Constants.DB.Messages.TEXT_MSG));
 				ChatMsg chatMsg		= new ChatMsg(id,user,contactId,direction,msg);
 				chatHistory.add(chatMsg);
