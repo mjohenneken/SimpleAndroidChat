@@ -92,12 +92,12 @@ public class MessengerService implements ConnectionAdapterEventbus {
 	
 	@Override
 	public void contactEvent(Contact contact) {
-
+		model.addOrEditContact(contact);
 	}
 
 	
 	@Override
 	public void incommingMsgEvent(ChatMsg chatMsg) {
-		
+		model.appendChatMsg(chatMsg);
 	}
 }
