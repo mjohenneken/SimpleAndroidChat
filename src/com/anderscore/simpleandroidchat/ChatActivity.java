@@ -90,7 +90,7 @@ public class ChatActivity extends AbstractActivity {
 //	@Override
 //	protected void onServiceAvailable() {
 //		int userID = getIntent().getIntExtra(Extra.USER_ID, 0);
-//		//TODO contact = mBinder.getContact();
+//		//TODO contact = mBinder.getContact(userID);
 //
 //		
 //		listAdapter.updateList(contact.getChatHistory());
