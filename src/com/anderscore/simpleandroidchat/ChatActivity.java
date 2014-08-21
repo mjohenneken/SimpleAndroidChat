@@ -85,6 +85,7 @@ public class ChatActivity extends AbstractActivity {
 
 	
 
+
 	/**
 	 * get messages
 	 */
@@ -97,7 +98,6 @@ public class ChatActivity extends AbstractActivity {
 		listAdapter.updateList(contact.getChatHistory());
 
 	}
-
 
 //	@Override
 //	void notifyContact(Contact contact) {
