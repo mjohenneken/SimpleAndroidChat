@@ -57,7 +57,7 @@ public class ChatActivity extends AbstractActivity {
 					eTextChatMessage.getText().clear();
 					ChatMsg msg = new ChatMsg(contact.getUser(), false, msgText);
 										
-					//TODO ChatMsg showMsg = ChatActivity.this.mBinder.sendMessage(msg);
+					//TODO ChatMsg showMsg = ChatActivity.this.mBinder.sendMsg(msg);
 					//listAdapter.updateList(showMsg);
 
 					InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
