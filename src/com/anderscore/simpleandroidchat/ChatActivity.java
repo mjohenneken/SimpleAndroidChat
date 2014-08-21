@@ -55,7 +55,7 @@ public class ChatActivity extends AbstractActivity {
 				String msgText = eTextChatMessage.getText().toString();
 				if (msgText != "") {
 					eTextChatMessage.getText().clear();
-					ChatMsg msg = new ChatMsg(contact.getUser(), false, msgText);
+					ChatMsg msg = new ChatMsg(contact.getUser(),contact.getId(), false, msgText);
 										
 					//TODO ChatMsg showMsg = ChatActivity.this.mBinder.sendMsg(msg);
 					//listAdapter.updateList(showMsg);
