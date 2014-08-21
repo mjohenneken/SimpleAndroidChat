@@ -26,7 +26,7 @@ public class ContactListAdapter {
 	 * @param values - neue Daten
 	 * 	erneuert den Datenbestand und lässt den ListView neu laden
 	 */
-	public void updateList(ArrayList<Contact> values) {
+	public void updateList(ArrayList<Contact> contacts) {
 		//TODO update values
 	}
 	
