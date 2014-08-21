@@ -67,7 +67,7 @@ class DBModel{
 		String sql	=	"SELECT * " +
 						"FROM " + Constants.DB.Contacts.TABLE_NAME + " AS C " +
 						"LEFT JOIN " + Constants.DB.Messages.TABLE_NAME + " AS M " +
-						"ON C." + Constants.DB.Contacts.ID + " = M." + Constants.DB.Messages.TABLE_NAME +
+						"ON C." + Constants.DB.Contacts.ID + " = M." + Constants.DB.Messages.USER_ID +
 						" WHERE C." + Constants.DB.Contacts.ID + " = " + contactId +
 						" ORDER BY M." + Constants.DB.Contacts.ID + " ASC";
 		Cursor cursor = db.rawQuery(sql, null);
@@ -82,7 +82,7 @@ class DBModel{
 			do{
 				int id				= cursor.getInt(cursor.getColumnIndex(Constants.DB.Messages.ID));
 				boolean direction	= false;
-				if(cursor.getInt(cursor.getColumnIndex(Constants.DB.Messages.INCOMMING))==1)	direction = true;;
+				if(cursor.getInt(cursor.getColumnIndex(Constants.DB.Messages.INCOMMING))==1)	direction = true;
 				String	msg			= cursor.getString(cursor.getColumnIndex(Constants.DB.Messages.TEXT_MSG));
 				ChatMsg chatMsg		= new ChatMsg(id,user,contactId,direction,msg);
 				chatHistory.add(chatMsg);

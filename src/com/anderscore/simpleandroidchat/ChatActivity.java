@@ -55,9 +55,9 @@ public class ChatActivity extends AbstractActivity {
 				String msgText = eTextChatMessage.getText().toString();
 				if (msgText != "") {
 					eTextChatMessage.getText().clear();
-					ChatMsg msg = new ChatMsg(contact.getUser(), false, msgText);
+					ChatMsg msg = new ChatMsg(contact.getUser(),contact.getId(), false, msgText);
 										
-					//TODO ChatMsg showMsg = ChatActivity.this.mBinder.sendMessage(msg);
+					//TODO ChatMsg showMsg = ChatActivity.this.mBinder.sendMsg(msg);
 					//listAdapter.updateList(showMsg);
 
 					InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -90,7 +90,7 @@ public class ChatActivity extends AbstractActivity {
 //	@Override
 //	protected void onServiceAvailable() {
 //		int userID = getIntent().getIntExtra(Extra.USER_ID, 0);
-//		//TODO contact = mBinder.getContact();
+//		//TODO contact = mBinder.getContact(userID);
 //
 //		
 //		listAdapter.updateList(contact.getChatHistory());
@@ -108,7 +108,7 @@ public class ChatActivity extends AbstractActivity {
 //	 */
 //	@Override
 //	void notifyMsg(ChatMsg msg) {	
-//		if (msg.getId() ==contact.getId()) {
+//		if (msg.getUserId() ==contact.getId()) {
 //		listAdapter.updateList(msg);
 //}
 //	}
