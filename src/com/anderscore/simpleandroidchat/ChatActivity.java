@@ -18,22 +18,23 @@ import com.anderscore.simpleandroidchat.Constants.Extra;
  */
 /**
  * @author paloka
- *
+ * 
  */
 public class ChatActivity extends AbstractActivity {
-	
+
 	ListView list;
 	ChatListAdapter listAdapter;
 	EditText eTextChatMessage;
 	Button btnSendMessage;
 
 	Contact contact;
-	
 
 	/**
-	 * display up true, liste finden und setzen, andere views holen, listadapter instanz
+	 * display up true, liste finden und setzen, andere views holen, listadapter
+	 * instanz
 	 * 
-	 * click listeer: clear, new chatmsg, sendMsg, updateList, InputMethodManager, Intent mit Contact Extra
+	 * click listeer: clear, new chatmsg, sendMsg, updateList,
+	 * InputMethodManager, Intent mit Contact Extra
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,7 @@ public class ChatActivity extends AbstractActivity {
 				if (msgText != "") {
 					eTextChatMessage.getText().clear();
 					ChatMsg msg = new ChatMsg(contact.getUser(), false, msgText);
-										
+
 					ChatMsg showMsg = ChatActivity.this.mBinder.sendMsg(msg);
 					listAdapter.updateList(showMsg);
 
@@ -63,7 +64,7 @@ public class ChatActivity extends AbstractActivity {
 					imm.hideSoftInputFromWindow(eTextChatMessage.getWindowToken(), 0);
 				}
 			}
-		});	
+		});
 		super.onCreate(savedInstanceState);
 	}
 
@@ -82,16 +83,13 @@ public class ChatActivity extends AbstractActivity {
 		}
 	}
 
-	
 	/**
 	 * get messages
 	 */
 	@Override
 	protected void onServiceAvailable() {
 		int userID = getIntent().getIntExtra(Extra.USER_ID, 0);
-		 contact = mBinder.getContact(userID);
-
-		
+		contact = mBinder.getContact(userID);
 		listAdapter.updateList(contact.getChatHistory());
 
 	}
