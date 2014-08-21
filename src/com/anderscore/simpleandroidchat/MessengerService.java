@@ -126,13 +126,9 @@ public class MessengerService extends Service implements ConnectionAdapterEventb
 	public void setOnlineStatus(NetworkInfo[] networkInfo) {
 		boolean wifi	= networkInfo[ConnectivityManager.TYPE_WIFI].isConnected();
 		boolean mobile	= networkInfo[ConnectivityManager.TYPE_MOBILE].isConnected();
-		if(wifi){
-			onlineStatus = OnlineStatus.WIFI;
-		}
-		if(mobile&&!wifi){
-			onlineStatus = OnlineStatus.MOBILE;
-		}
-		onlineStatus	= OnlineStatus.OFFLINE;
+		if(wifi)			onlineStatus = OnlineStatus.WIFI;
+		if(mobile&&!wifi)	onlineStatus = OnlineStatus.MOBILE;
+		if(!mobile&&!wifi)	onlineStatus	= OnlineStatus.OFFLINE;
 		System.out.println("InternetStatus: " + onlineStatus);
 	}
 	
