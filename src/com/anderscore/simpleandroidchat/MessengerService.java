@@ -108,5 +108,6 @@ public class MessengerService extends Service implements ConnectionAdapterEventb
 				e.printStackTrace();
 			}
 		}
+		NotificationBuilder.createOutAppNotification(this, chatMsg);
 	}
 }
