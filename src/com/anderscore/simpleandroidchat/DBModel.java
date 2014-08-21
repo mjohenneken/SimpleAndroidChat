@@ -67,7 +67,7 @@ class DBModel{
 		String sql	=	"SELECT * " +
 						"FROM " + Constants.DB.Contacts.TABLE_NAME + " AS C " +
 						"LEFT JOIN " + Constants.DB.Messages.TABLE_NAME + " AS M " +
-						"ON C." + Constants.DB.Contacts.ID + " = M." + Constants.DB.Messages.TABLE_NAME +
+						"ON C." + Constants.DB.Contacts.ID + " = M." + Constants.DB.Messages.USER_ID +
 						" WHERE C." + Constants.DB.Contacts.ID + " = " + contactId +
 						" ORDER BY M." + Constants.DB.Contacts.ID + " ASC";
 		Cursor cursor = db.rawQuery(sql, null);

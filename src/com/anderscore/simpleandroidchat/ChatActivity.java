@@ -1,8 +1,5 @@
 package com.anderscore.simpleandroidchat;
 
-import com.anderscore.simpleandroidchat.Constants.Extra;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
@@ -11,6 +8,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import com.anderscore.simpleandroidchat.Constants.Extra;
 
 /**
  * 
@@ -57,8 +56,8 @@ public class ChatActivity extends AbstractActivity {
 					eTextChatMessage.getText().clear();
 					ChatMsg msg = new ChatMsg(contact.getUser(), false, msgText);
 										
-					//TODO ChatMsg showMsg = ChatActivity.this.mBinder.sendMessage(msg);
-					//listAdapter.updateList(showMsg);
+					ChatMsg showMsg = ChatActivity.this.mBinder.sendMsg(msg);
+					listAdapter.updateList(showMsg);
 
 					InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 					imm.hideSoftInputFromWindow(eTextChatMessage.getWindowToken(), 0);
@@ -84,15 +83,13 @@ public class ChatActivity extends AbstractActivity {
 	}
 
 	
-
-
 	/**
 	 * get messages
 	 */
 	@Override
 	protected void onServiceAvailable() {
 		int userID = getIntent().getIntExtra(Extra.USER_ID, 0);
-		//TODO contact = mBinder.getContact();
+		 contact = mBinder.getContact(userID);
 
 		
 		listAdapter.updateList(contact.getChatHistory());
