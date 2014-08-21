@@ -14,11 +14,6 @@ public class MessengerService extends Service implements ConnectionAdapterEventb
 	DBModel				model;
 	LocalBinder			mBinder	= new LocalBinder();
 	
-	public class LocalBinder extends Binder{
-		public MessengerService getService(){
-			return MessengerService.this;
-		}
-	}
 	
 /* ------- Service ------- */
 	
@@ -70,35 +65,36 @@ public class MessengerService extends Service implements ConnectionAdapterEventb
 		
 	}
 	
-	
-	/**	getContacts
-	 * 
-	 * 	@return
-	 */
-	public ArrayList<Contact> getContacts() {
-		return model.getContacts();
-	}
-	
-	
-	/**	getContact
-	 * 
-	 * 	@param contactId
-	 * 	@return
-	 */
-	public Contact getContact(int contactId){
-		return model.getContact(contactId);
-	}
-	
-	
-	/**	sendMsg
-	 * 
-	 * 	@param msg
-	 * 	@return
-	 */
-	public ChatMsg sendMsg(ChatMsg msg) {
-		msg	= model.appendChatMsg(msg);
-		connection.sendMsg(msg);
-		return msg;
+	public class LocalBinder extends Binder{
+		/**	getContacts
+		 * 
+		 * 	@return
+		 */
+		public ArrayList<Contact> getContacts() {
+			return model.getContacts();
+		}
+		
+		
+		/**	getContact
+		 * 
+		 * 	@param contactId
+		 * 	@return
+		 */
+		public Contact getContact(int contactId){
+			return model.getContact(contactId);
+		}
+		
+		
+		/**	sendMsg
+		 * 
+		 * 	@param msg
+		 * 	@return
+		 */
+		public ChatMsg sendMsg(ChatMsg msg) {
+			msg	= model.appendChatMsg(msg);
+			connection.sendMsg(msg);
+			return msg;
+		}
 	}
 
 	

@@ -16,8 +16,8 @@ import android.os.IBinder;
  */
 public class AbstractActivity extends Activity {
 
-	boolean bound	= false;
-	MessengerService mService	= null;
+	boolean mBound	= false;
+	LocalBinder mBinder	= null;
 
 	ServiceConnection serviceConnection = new ServiceConnection() {
 
@@ -26,8 +26,7 @@ public class AbstractActivity extends Activity {
 		 */
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
-			LocalBinder mBinder	= (LocalBinder) service;
-			mService		= mBinder.getService();
+			mBinder	= (LocalBinder) service;
 		}
 
 		/**
@@ -35,7 +34,7 @@ public class AbstractActivity extends Activity {
 		 */
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
-			mService	= null;
+			mBinder	= null;
 		}
 
 	};
@@ -63,8 +62,8 @@ public class AbstractActivity extends Activity {
 	 * bind auto create
 	 */
 	private void bind() {
-		if(bound) return;
-		bound	= true;
+		if(mBound) return;
+		mBound	= true;
 		Intent intent = new Intent(this, MessengerService.class);
 		startService(intent);
 		bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
@@ -74,8 +73,8 @@ public class AbstractActivity extends Activity {
 	 * bound checken und setzen, unbindService
 	 */
 	private void unbind() {
-		if(!bound) return;
-		bound = false;
+		if(!mBound) return;
+		mBound = false;
 		unbindService(serviceConnection);
 	}
 
