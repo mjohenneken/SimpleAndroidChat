@@ -35,16 +35,16 @@ public class ChatActivity extends AbstractActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-//	
-//	/**
-//	 * get messages
-//	 */
-//	@Override
-//	void onServiceAvailable() {
-//		// TODO
-//
-//	}
-//
+	
+	/**
+	 * get messages
+	 */
+	@Override	
+	protected void onServiceAvailable() {
+		// TODO
+
+	}
+
 //	@Override
 //	void notifyContact(Contact contact) {
 //		//do nothing
