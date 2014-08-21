@@ -1,18 +1,25 @@
 package com.anderscore.simpleandroidchat;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+
+import com.anderscore.simpleandroidchat.Constants.Event;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.os.Message;
 import android.os.Messenger;
+import android.os.RemoteException;
 
 public class MessengerService extends Service implements ConnectionAdapterEventbus {
 	
 	ConnectionAdapter 	connection;
 	DBModel				model;
 	LocalBinder			mBinder	= new LocalBinder();
+	LinkedList<Messenger> messengers = new LinkedList<Messenger>();
 	
 	
 /* ------- Service ------- */
@@ -48,22 +55,6 @@ public class MessengerService extends Service implements ConnectionAdapterEventb
 /* ------- Service API ------- */
 
 
-	/**	registerMessenger
-	 * 
-	 * 	@param messenger
-	 */
-	public void registerMessenger(Messenger messenger) {
-		
-	}
-
-	
-	/**	unregisterMessenger
-	 * 
-	 * 	@param messenger
-	 */
-	public void unregisterMessenger(Messenger messenger) {
-		
-	}
 	
 	public class LocalBinder extends Binder{
 		/**	getContacts
@@ -95,6 +86,23 @@ public class MessengerService extends Service implements ConnectionAdapterEventb
 			connection.sendMsg(msg);
 			return msg;
 		}
+		
+		/**	registerMessenger
+		 * 
+		 * 	@param messenger
+		 */
+		public void registerMessenger(Messenger messenger) {
+			messengers.add(messenger);
+		}
+
+		
+		/**	unregisterMessenger
+		 * 
+		 * 	@param messenger
+		 */
+		public void unregisterMessenger(Messenger messenger) {
+			messengers.remove(messenger);
+		}
 	}
 
 	
@@ -104,11 +112,27 @@ public class MessengerService extends Service implements ConnectionAdapterEventb
 	@Override
 	public void contactEvent(Contact contact) {
 		model.addOrEditContact(contact);
+		Iterator<Messenger> iter = messengers.iterator();
+		while(iter.hasNext()) {
+			try {
+				iter.next().send(Message.obtain(null,Event.CONTACT,contact));
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	
 	@Override
 	public void incommingMsgEvent(ChatMsg chatMsg) {
-		model.appendChatMsg(chatMsg);
+		chatMsg = model.appendChatMsg(chatMsg);
+		Iterator<Messenger> iter = messengers.iterator();
+		while(iter.hasNext()) {
+			try {
+				iter.next().send(Message.obtain(null,Event.MSG,chatMsg));
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

@@ -6,8 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
 
+import com.anderscore.simpleandroidchat.Constants.Event;
 import com.anderscore.simpleandroidchat.MessengerService.LocalBinder;
 
 /**
@@ -20,6 +24,9 @@ public abstract class AbstractActivity extends Activity {
 	LocalBinder mBinder	= null;
 	
 	protected abstract void onServiceAvailable();
+	abstract void notifyContact(Contact contact);
+	abstract void notifyMsg(ChatMsg msg);
+		
 
 	ServiceConnection serviceConnection = new ServiceConnection() {
 
@@ -29,6 +36,7 @@ public abstract class AbstractActivity extends Activity {
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
 			mBinder	= (LocalBinder) service;
+			mBinder.registerMessenger(messenger);
 			AbstractActivity.this.onServiceAvailable();
 		}
 
@@ -37,10 +45,30 @@ public abstract class AbstractActivity extends Activity {
 		 */
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
+			mBinder.unregisterMessenger(messenger);
 			mBinder	= null;
 		}
 
 	};
+	
+	private Messenger messenger = new Messenger(new Handler(new Handler.Callback() {
+		
+		@Override
+		public boolean handleMessage(Message msg) {
+			switch (msg.what) {
+			case Event.CONTACT:
+				notifyContact((Contact)msg.obj);
+				return true;
+				
+			case Event.MSG:
+				notifyMsg((ChatMsg)msg.obj);
+				return true;
+
+			default:
+				return false;
+			}
+		}
+	}));
 
 	/**
 	 * bind

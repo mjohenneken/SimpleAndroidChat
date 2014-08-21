@@ -50,5 +50,16 @@ public class ContactListActivity extends AbstractActivity {
 		adapter.updateList(contacts);	
 	}
 
+	@Override
+	void notifyContact(Contact contact) {
+		adapter.updateList(mBinder.getContacts());		
+	}
+
+	@Override
+	void notifyMsg(ChatMsg msg) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

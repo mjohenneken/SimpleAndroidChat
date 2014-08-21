@@ -61,7 +61,6 @@ public class ChatActivity extends AbstractActivity {
 					ChatMsg showMsg = ChatActivity.this.mBinder.sendMsg(msg);
 					listAdapter.updateList(showMsg);
 
-
 					InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 					imm.hideSoftInputFromWindow(eTextChatMessage.getWindowToken(), 0);
 				}
@@ -96,20 +95,20 @@ public class ChatActivity extends AbstractActivity {
 
 	}
 
-//	@Override
-//	void notifyContact(Contact contact) {
-//		//do nothing
-//	}
-//
-//	/**
-//	 *  listadapter update bei gleicher contact Id
-//	 * 
-//	 */
-//	@Override
-//	void notifyMsg(ChatMsg msg) {	
-//		if (msg.getId() ==contact.getId()) {
-//		listAdapter.updateList(msg);
-//}
-//	}
+	@Override
+	void notifyContact(Contact contact) {
+		// do nothing
+	}
+
+	/**
+	 * listadapter update bei gleicher contact Id
+	 * 
+	 */
+	@Override
+	void notifyMsg(ChatMsg msg) {
+		if (msg.getUserId() == contact.getId()) {
+			listAdapter.updateList(msg);
+		}
+	}
 
 }
