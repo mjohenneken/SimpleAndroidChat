@@ -108,7 +108,7 @@ public class ChatActivity extends AbstractActivity {
 //	 */
 //	@Override
 //	void notifyMsg(ChatMsg msg) {	
-//		if (msg.getId() ==contact.getId()) {
+//		if (msg.getUserId() ==contact.getId()) {
 //		listAdapter.updateList(msg);
 //}
 //	}
