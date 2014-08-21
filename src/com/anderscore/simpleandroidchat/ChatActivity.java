@@ -95,6 +95,7 @@ public class ChatActivity extends AbstractActivity {
 
 	}
 
+
 	@Override
 	void notifyContact(Contact contact) {
 		// do nothing
@@ -110,5 +111,4 @@ public class ChatActivity extends AbstractActivity {
 			listAdapter.updateList(msg);
 		}
 	}
-
 }
