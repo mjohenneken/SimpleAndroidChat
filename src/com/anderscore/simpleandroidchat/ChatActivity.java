@@ -55,10 +55,12 @@ public class ChatActivity extends AbstractActivity {
 				String msgText = eTextChatMessage.getText().toString();
 				if (msgText != "") {
 					eTextChatMessage.getText().clear();
-					ChatMsg msg = new ChatMsg(contact.getUser(), false, msgText);
+
+					ChatMsg msg = new ChatMsg(contact.getUser(), contact.getId(), false, msgText);
 
 					ChatMsg showMsg = ChatActivity.this.mBinder.sendMsg(msg);
 					listAdapter.updateList(showMsg);
+
 
 					InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 					imm.hideSoftInputFromWindow(eTextChatMessage.getWindowToken(), 0);
