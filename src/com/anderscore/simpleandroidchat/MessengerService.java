@@ -37,54 +37,34 @@ public class MessengerService implements ConnectionAdapterEventbus {
 	}*/
 
 	
-/* ------- Service API ------- */
+/* ------- Service API ------- 
 
 
-	/**	registerMessenger
-	 * 
-	 * 	@param messenger
-	 */
 	public void registerMessenger(Messenger messenger) {
 		
 	}
 
 	
-	/**	unregisterMessenger
-	 * 
-	 * 	@param messenger
-	 */
 	public void unregisterMessenger(Messenger messenger) {
 		
 	}
 	
 	
-	/**	getContacts
-	 * 
-	 * 	@return
-	 */
 	public ArrayList<Contact> getContacts() {
-		return null;
+		return model.getContacts();
 	}
 	
 	
-	/**	getContact
-	 * 
-	 * 	@param contactId
-	 * 	@return
-	 */
 	public Contact getContact(int contactId){
-		return null;
+		return model.getContact(contactId);
 	}
 	
-	
-	/**	sendMsg
-	 * 
-	 * 	@param msg
-	 * 	@return
-	 */
+
 	public ChatMsg sendMsg(ChatMsg msg) {
-		return null;
-	}
+		msg	= model.appendChatMsg(msg);
+		connection.sendMsg(msg);
+		return msg;
+	}*/
 
 	
 /* ------- ConnectionAdapterEventbus ------- */
