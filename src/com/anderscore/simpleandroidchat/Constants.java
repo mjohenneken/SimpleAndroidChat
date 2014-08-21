@@ -13,7 +13,7 @@ public final class Constants {
 	}
 	
 	public static final class Extra {
-		public static final String USER = "user";
+		public static final String USER_ID = "user_id";
 		public static final String IS_ONLINE = "is_online";
 	}
 	

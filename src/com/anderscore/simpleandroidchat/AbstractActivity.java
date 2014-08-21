@@ -14,7 +14,7 @@ import android.os.IBinder;
  * 
  * @author max Attribut bound, Service
  */
-public class AbstractActivity extends Activity {
+public abstract class AbstractActivity extends Activity {
 
 	boolean mBound	= false;
 	LocalBinder mBinder	= null;

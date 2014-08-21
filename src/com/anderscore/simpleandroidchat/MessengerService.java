@@ -103,12 +103,12 @@ public class MessengerService extends Service implements ConnectionAdapterEventb
 	
 	@Override
 	public void contactEvent(Contact contact) {
-
+		model.addOrEditContact(contact);
 	}
 
 	
 	@Override
 	public void incommingMsgEvent(ChatMsg chatMsg) {
-		
+		model.appendChatMsg(chatMsg);
 	}
 }
