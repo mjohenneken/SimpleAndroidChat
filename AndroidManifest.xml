@@ -9,7 +9,8 @@
         android:targetSdkVersion="21" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <!-- <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> -->
+    
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -31,6 +32,13 @@
             android:windowSoftInputMode="adjustResize" />
 
         <service android:name="com.anderscore.simpleandroidchat.MessengerService" />
+        <!--
+		<receiver android:name="com.anderscore.anderchat.service.BroadcastReceiverNetwork" android:enabled="true">
+			<intent-filter>
+				<action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+			</intent-filter>
+		</receiver>
+		-->
     </application>
 
 </manifest>
