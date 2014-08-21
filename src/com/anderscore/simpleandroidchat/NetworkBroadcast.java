@@ -12,5 +12,6 @@ public class NetworkBroadcast extends BroadcastReceiver{
 	public void onReceive(Context arg0, Intent arg1) {
 		ConnectivityManager cManager	= (ConnectivityManager) arg0.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo[] networkInfo	= cManager.getAllNetworkInfo();
+		if(MessengerService.getService()!=null)	MessengerService.getService().setOnlineStatus(networkInfo);
 	}
 }
