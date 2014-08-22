@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+
 /**
  * 
  * @author mjohenneken Attribut context, contacts ids R.id.tViewUser
@@ -17,16 +18,12 @@ import android.widget.TextView;
  */
 public class ContactListAdapter extends BaseAdapter {
 
+
 	List<Contact> contacts = new ArrayList<Contact>();
 	Context context;
-
-	private static class ViewHolder {
-		TextView tViewUser;
-	}
-
+	
 	/**
-	 * 
-	 *  context
+	 * TODO context
 	 */
 	public ContactListAdapter(Context context) {
 		this.context = context;
@@ -36,11 +33,12 @@ public class ContactListAdapter extends BaseAdapter {
 	public int getCount() {
 		return contacts.size();
 	}
-
+	
 	@Override
 	public Contact getItem(int position) {
 		return contacts.get(position);
 	}
+
 
 	@Override
 	public long getItemId(int position) {
@@ -78,5 +76,9 @@ public class ContactListAdapter extends BaseAdapter {
 	public void updateList(ArrayList<Contact> contacts) {
 		this.contacts = contacts;
 		notifyDataSetChanged();
+	}
+
+	private static class ViewHolder {
+		public TextView tViewUser;
 	}
 }
