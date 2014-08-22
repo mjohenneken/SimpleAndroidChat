@@ -38,4 +38,8 @@ public final class Constants {
 	}
 	
 	public static final int NOTIFICATION_INDEX		= 4711;
+	
+	public enum OnlineStatus{
+		OFFLINE, MOBILE, WIFI
+	}
 }
