@@ -5,9 +5,13 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import com.anderscore.simpleandroidchat.Constants.Event;
+import com.anderscore.simpleandroidchat.Constants.OnlineStatus;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Message;
@@ -20,6 +24,8 @@ public class MessengerService extends Service implements ConnectionAdapterEventb
 	DBModel				model;
 	LocalBinder			mBinder	= new LocalBinder();
 	LinkedList<Messenger> messengers = new LinkedList<Messenger>();
+	OnlineStatus onlineStatus;
+	static MessengerService service = null;;
 	
 	
 /* ------- Service ------- */
@@ -34,11 +40,15 @@ public class MessengerService extends Service implements ConnectionAdapterEventb
 	@Override
 	public void onCreate() {		
 		super.onCreate();
+		if(service == null)	service = this;
+		ConnectivityManager cManager	= (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo[] networkInfo	= cManager.getAllNetworkInfo();
+		setOnlineStatus(networkInfo);	
 		connection	= new ConnectionAdapter(this);
 		model		= new DBModel(this);
 	}
 
-	
+
 	@Override
 	public IBinder onBind(Intent intent) {
 		return mBinder;
@@ -49,6 +59,7 @@ public class MessengerService extends Service implements ConnectionAdapterEventb
 	public void onDestroy() {
 		super.onDestroy();
 		connection.disconnect();
+		service = null;
 	}
 
 	
@@ -108,5 +119,20 @@ public class MessengerService extends Service implements ConnectionAdapterEventb
 				e.printStackTrace();
 			}
 		}
+		NotificationBuilder.createOutAppNotification(this, chatMsg);
+	}
+
+
+	public void setOnlineStatus(NetworkInfo[] networkInfo) {
+		boolean wifi	= networkInfo[ConnectivityManager.TYPE_WIFI].isConnected();
+		boolean mobile	= networkInfo[ConnectivityManager.TYPE_MOBILE].isConnected();
+		if(wifi)			onlineStatus = OnlineStatus.WIFI;
+		if(mobile&&!wifi)	onlineStatus = OnlineStatus.MOBILE;
+		if(!mobile&&!wifi)	onlineStatus	= OnlineStatus.OFFLINE;
+		System.out.println("InternetStatus: " + onlineStatus);
+	}
+	
+	public static MessengerService getService(){
+		return service;
 	}
 }
