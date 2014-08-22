@@ -85,6 +85,7 @@ public class ChatActivity extends AbstractActivity {
 		}
 	}
 
+
 	/**
 	 * get messages
 	 */

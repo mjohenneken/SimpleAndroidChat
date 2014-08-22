@@ -10,24 +10,24 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.anderscore.simpleandroidchat.Constants.Extra;
+
 /**
  * 
- * @author mjohenneken
- * list, listAdapter
- *
+ * @author mjohenneken list, listAdapter
+ * 
  */
 public class ContactListActivity extends AbstractActivity {
-	
+
 	ListView list;
 	ContactListAdapter adapter;
-	
+
 	/**
-	 * content View, listadpater, instanz listview holen, emtpy View, onitemClick
+	 * listadpater, instanz , onitemClick
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.activity_contact_list);
-		
+
 		adapter = new ContactListAdapter(this);
 		list = (ListView) findViewById(android.R.id.list);
 		list.setEmptyView(findViewById(android.R.id.empty));
@@ -36,19 +36,17 @@ public class ContactListActivity extends AbstractActivity {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Intent intent = new Intent(ContactListActivity.this,ChatActivity.class);
+				Intent intent = new Intent(ContactListActivity.this, ChatActivity.class);
 				intent.putExtra(Extra.USER_ID, adapter.getItem(position).getId());
-				startActivity(intent);				
+				startActivity(intent);
 			}
-		});		
+		});
 		super.onCreate(savedInstanceState);
 	}
 
 	@Override
 	protected void onServiceAvailable() {
 		ArrayList<Contact> contacts = mBinder.getContacts();
-		adapter.updateList(contacts);	
+		adapter.updateList(contacts);
 	}
-
-
 }
