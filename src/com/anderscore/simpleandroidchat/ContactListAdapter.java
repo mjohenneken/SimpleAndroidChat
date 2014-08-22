@@ -24,6 +24,10 @@ public class ContactListAdapter extends BaseAdapter {
 		TextView tViewUser;
 	}
 
+	/**
+	 * 
+	 *  context
+	 */
 	public ContactListAdapter(Context context) {
 		this.context = context;
 	}
@@ -66,9 +70,13 @@ public class ContactListAdapter extends BaseAdapter {
 		return rowView;
 	}
 	
+	/**
+	 * 
+	 * @param contacts - neue Daten
+	 * 	erneuert den Datenbestand und lässt den ListView neu laden
+	 */
 	public void updateList(ArrayList<Contact> contacts) {
 		this.contacts = contacts;
 		notifyDataSetChanged();
 	}
-
 }
