@@ -53,7 +53,7 @@ public class ChatActivity extends AbstractActivity {
 			@Override
 			public void onClick(View v) {
 				String msgText = eTextChatMessage.getText().toString();
-				if (msgText != "") {
+				if (!msgText.equals("")) {
 					eTextChatMessage.getText().clear();
 					ChatMsg msg = new ChatMsg(contact.getUser(),contact.getId(), false, msgText);
 										
