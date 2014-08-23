@@ -21,9 +21,7 @@ import com.anderscore.simpleandroidchat.MessengerService.LocalBinder;
 public abstract class AbstractActivity extends Activity {
 
 	boolean mBound	= false;
-	LocalBinder mBinder	= null;		
-	abstract void notifyContact(Contact contact);
-	abstract void notifyMsg(ChatMsg msg);
+	LocalBinder mBinder	= null;			
 		
 	ServiceConnection serviceConnection = new ServiceConnection() {		
 		@Override
@@ -59,6 +57,8 @@ public abstract class AbstractActivity extends Activity {
 		}
 	}));	
 	abstract void onServiceAvailable();
+	abstract void notifyMsg(ChatMsg chatMsg);
+	abstract void notifyContact(Contact contact);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

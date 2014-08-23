@@ -44,5 +44,4 @@ public class ContactListActivity extends AbstractActivity {
 		// TODO Auto-generated method stub
 		
 	}
-
 }
