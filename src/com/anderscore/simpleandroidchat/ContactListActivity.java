@@ -33,4 +33,8 @@ public class ContactListActivity extends AbstractActivity {
 	void onServiceAvailable() {
 		adapter.updateList(mBinder.getContacts());
 	}
+	@Override
+	void notifyMsg(ChatMsg chatMsg) {
+		//do nothing
+	}
 }

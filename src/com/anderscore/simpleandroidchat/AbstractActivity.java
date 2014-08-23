@@ -40,6 +40,7 @@ public abstract class AbstractActivity extends Activity {
 
 	};
 	abstract void onServiceAvailable();
+	abstract void notifyMsg(ChatMsg chatMsg);
 
 	/**
 	 * bind

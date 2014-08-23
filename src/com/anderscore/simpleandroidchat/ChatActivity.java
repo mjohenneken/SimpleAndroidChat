@@ -63,20 +63,11 @@ public class ChatActivity extends AbstractActivity {
 		listAdapter.updateList(contact.getChatHistory());
 	}
 
-	// @Override
-	// void notifyContact(Contact contact) {
-	// //do nothing
-	// }
-	//
-	// /**
-	// * listadapter update bei gleicher contact Id
-	// *
-	// */
-	// @Override
-	// void notifyMsg(ChatMsg msg) {
-	// if (msg.getUserId() ==contact.getId()) {
-	// listAdapter.updateList(msg);
-	// }
-	// }
+	@Override
+	void notifyMsg(ChatMsg msg) {
+		if (msg.getUserId() == contact.getId()) {
+			listAdapter.updateList(msg);
+		}
+	}
 
 }
