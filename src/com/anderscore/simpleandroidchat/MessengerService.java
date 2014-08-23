@@ -1,6 +1,7 @@
 package com.anderscore.simpleandroidchat;
 
 import java.util.ArrayList;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -25,7 +26,6 @@ public class MessengerService extends Service implements ConnectionAdapterEventb
 	LocalBinder			mBinder	= new LocalBinder();
 	LinkedList<Messenger> messengers = new LinkedList<Messenger>();
 	OnlineStatus onlineStatus;
-	
 	
 	
 /* ------- Service ------- */

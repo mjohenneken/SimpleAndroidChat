@@ -66,12 +66,7 @@ public class ChatActivity extends AbstractActivity {
 	@Override
 	void notifyContact(Contact contact) {
 		// do nothing
-	}
-
-	/**
-	 * listadapter update bei gleicher contact Id
-	 * 
-	 */
+	}	
 	@Override
 	void notifyMsg(ChatMsg msg) {
 		if (msg.getUserId() == contact.getId()) {
