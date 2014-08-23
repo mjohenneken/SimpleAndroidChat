@@ -2,7 +2,7 @@ package com.anderscore.simpleandroidchat;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-
+import java.util.Iterator;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
