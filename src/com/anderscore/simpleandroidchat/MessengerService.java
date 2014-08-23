@@ -1,6 +1,7 @@
 package com.anderscore.simpleandroidchat;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import android.app.Service;
 import android.content.Intent;
@@ -13,7 +14,6 @@ public class MessengerService extends Service implements ConnectionAdapterEventb
 	ConnectionAdapter 	connection;
 	DBModel				model;
 	LocalBinder			mBinder	= new LocalBinder();
-	
 	
 /* ------- Service ------- */
 	
