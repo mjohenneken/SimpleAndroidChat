@@ -27,6 +27,7 @@ public abstract class AbstractActivity extends Activity {
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
 			mBinder	= (LocalBinder) service;
+			onServiceAvailable();
 		}
 
 		/**
@@ -38,6 +39,7 @@ public abstract class AbstractActivity extends Activity {
 		}
 
 	};
+	abstract void onServiceAvailable();
 
 	/**
 	 * bind
