@@ -27,6 +27,8 @@ public class ContactListActivity extends AbstractActivity {
 				startActivity(intent);
 			}
 		});		
+		adapter = new ContactListAdapter(this);
+		list.setAdapter(adapter);
 		super.onCreate(savedInstanceState);
 	}
 	@Override
