@@ -28,6 +28,7 @@ public class ContactListActivity extends AbstractActivity {
 				startActivity(intent);
 			}
 		});		
+		//TODO adapter init
 		super.onCreate(savedInstanceState);
 	}
 	@Override
