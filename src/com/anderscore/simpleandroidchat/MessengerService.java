@@ -25,7 +25,7 @@ public class MessengerService extends Service implements ConnectionAdapterEventb
 	LocalBinder			mBinder	= new LocalBinder();
 	LinkedList<Messenger> messengers = new LinkedList<Messenger>();
 	OnlineStatus onlineStatus;
-	static MessengerService service = null;;
+	
 	
 	
 /* ------- Service ------- */
@@ -40,7 +40,7 @@ public class MessengerService extends Service implements ConnectionAdapterEventb
 	@Override
 	public void onCreate() {		
 		super.onCreate();
-		if(service == null)	service = this;
+		
 		ConnectivityManager cManager	= (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo[] networkInfo	= cManager.getAllNetworkInfo();
 		setOnlineStatus(networkInfo);	
@@ -59,7 +59,7 @@ public class MessengerService extends Service implements ConnectionAdapterEventb
 	public void onDestroy() {
 		super.onDestroy();
 		connection.disconnect();
-		service = null;
+		
 	}
 
 	
@@ -132,7 +132,4 @@ public class MessengerService extends Service implements ConnectionAdapterEventb
 		System.out.println("InternetStatus: " + onlineStatus);
 	}
 	
-	public static MessengerService getService(){
-		return service;
-	}
 }

@@ -33,11 +33,6 @@
 
         <service android:name="com.anderscore.simpleandroidchat.MessengerService" />
         
-		<receiver android:name="com.anderscore.simpleandroidchat.NetworkBroadcast" android:enabled="true">
-			<intent-filter>
-				<action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
-			</intent-filter>
-		</receiver>
 		
     </application>
 
