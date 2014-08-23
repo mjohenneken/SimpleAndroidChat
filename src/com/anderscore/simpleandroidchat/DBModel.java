@@ -22,7 +22,7 @@ class DBModel{
 	 * 	@param context - Anwendungskontext
 	 */
 	DBModel(Context context){
-		this.db			= DBConnection.getDBConnection(context);
+		
 	}
 	
 	

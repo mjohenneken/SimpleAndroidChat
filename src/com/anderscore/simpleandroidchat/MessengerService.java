@@ -6,9 +6,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import com.anderscore.simpleandroidchat.Constants.Event;
+import com.anderscore.simpleandroidchat.Constants.OnlineStatus;
 
 import android.app.Service;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Message;
@@ -21,6 +24,7 @@ public class MessengerService extends Service implements ConnectionAdapterEventb
 	DBModel				model;
 	LocalBinder			mBinder	= new LocalBinder();
 	LinkedList<Messenger> messengers = new LinkedList<Messenger>();
+	
 	
 /* ------- Service ------- */
 	
